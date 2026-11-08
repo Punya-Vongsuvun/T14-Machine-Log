@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard — T14 Machine Log</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body class="dash">
+<header class="topbar"></header>
+<main>
+  <section class="card no-print" style="margin-bottom:16px">
+    <div class="filters">
+      <div class="field">
+        <label for="fPreset">ช่วงเวลา</label>
+        <select class="input" id="fPreset">
+          <option value="thisMonth">เดือนนี้</option>
+          <option value="lastMonth">เดือนก่อน</option>
+          <option value="last7">7 วันล่าสุด</option>
+          <option value="last30">30 วันล่าสุด</option>
+          <option value="thisYear">ปีนี้</option>
+          <option value="custom">กำหนดเอง</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fFrom">ตั้งแต่วันที่</label>
+        <input type="date" class="input" id="fFrom">
+      </div>
+      <div class="field">
+        <label for="fTo">ถึงวันที่</label>
+        <input type="date" class="input" id="fTo">
+      </div>
+      <div class="field">
+        <label for="fType">ประเภทรายการ (กราฟ / ชั่วโมง — ไม่รวม Stop Line / Monday Cleaning)</label>
+        <select class="input" id="fType">
+          <option value="problem">ปัญหา</option>
+          <option value="improve">การปรับปรุง</option>
+          <option value="all">ทั้งหมด</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fCompare">เปรียบเทียบกับ</label>
+        <select class="input" id="fCompare">
+          <option value="prev">ช่วงก่อนหน้า (ยาวเท่ากัน)</option>
+          <option value="yoy">ช่วงเดียวกันปีก่อน</option>
+          <option value="custom">เลือกช่วงเอง</option>
+          <option value="none">ไม่เปรียบเทียบ</option>
+        </select>
+      </div>
+      <div class="row hidden" id="cmpRange" style="align-items:end">
+        <div class="field"><label for="fCFrom">เทียบตั้งแต่</label><input type="date" class="input" id="fCFrom"></div>
+        <div class="field"><label for="fCTo">ถึง</label><input type="date" class="input" id="fCTo"></div>
+      </div>
+      <div class="field" style="min-width:0">
+        <span class="label">แสดง %</span>
+        <div class="tog" id="pctTog" title="% ต่อท้ายในกราฟ กล่องตัวเลข และหน้าต่างรายการ (จำไว้ในเครื่องนี้)">
+          <button type="button" data-v="on">เปิด</button><button type="button" data-v="off">ปิด</button>
+        </div>
+      </div>
+      <span class="grow"></span>
+      <button class="btn" id="printBtn">🖨 พิมพ์ / PDF (A4 แนวนอน)</button>
+    </div>
+  </section>
+
+  <div class="dash-title">
+    <h1 id="dashTitle">Dashboard</h1>
+    <span class="muted" id="dashPeriod"></span>
+    <span class="grow"></span>
+    <span class="muted small print-only" id="printedAt"></span>
+  </div>
+
+  <section class="stack" id="kpis" style="gap:14px"></section>
+
+  <section class="chart-grid" style="margin-top:16px">
+    <div class="card" data-chart="machine">
+      <div class="card-head">
+        <h3 id="cMachineTitle">ตามเครื่องจักร</h3>
+        <span class="chart-note" data-note></span>
+        <span class="grow"></span>
+        <div class="chart-tools no-print">
+          <div class="tog" data-sort><button type="button" data-v="machine">ตามเครื่อง</button><button type="button" data-v="hours">ชม.</button><button type="button" data-v="count">ครั้ง</button></div>
+        </div>
+      </div>
+      <div class="chart-box" id="boxMachine"><canvas id="cMachine" aria-label="กราฟตามเครื่องจักร"></canvas></div>
+    </div>
+    <div class="card" data-chart="size">
+      <div class="card-head">
+        <h3>ตาม Size</h3><span class="chart-note" data-note></span><span class="grow"></span>
+        <div class="chart-tools no-print">
+          <div class="tog" data-sort><button type="button" data-v="hours">ชม.</button><button type="button" data-v="count">ครั้ง</button></div>
+        </div>
+      </div>
+      <div class="chart-box"><canvas id="cSize" aria-label="กราฟตาม Size"></canvas></div>
+    </div>
+    <div class="card" data-chart="shift">
+      <div class="card-head">
+        <h3>ตามกะ</h3><span class="chart-note" data-note></span><span class="grow"></span>
+        <div class="chart-tools no-print">
+          <div class="tog" data-sort><button type="button" data-v="hours">ชม.</button><button type="button" data-v="count">ครั้ง</button></div>
+        </div>
+      </div>
+      <div class="chart-box"><canvas id="cShift" aria-label="กราฟตามกะ"></canvas></div>
+    </div>
+    <div class="card" data-chart="improve">
+      <div class="card-head">
+        <h3>งานปรับปรุง</h3><span class="chart-note" data-note></span><span class="grow"></span>
+        <span class="muted small no-print">จำนวนงาน</span>
+      </div>
+      <div class="chart-box"><canvas id="cImprove" aria-label="กราฟงานปรับปรุง: เสร็จแล้ว รอดำเนินการ ระหว่างดำเนินการ เกินกำหนด"></canvas></div>
+    </div>
+  </section>
+</main>
+<script src="/static/vendor/chart.umd.min.js"></script>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/dashboard.js"></script>
+</body>
+</html>

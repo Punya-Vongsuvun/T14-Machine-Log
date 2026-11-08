@@ -1,0 +1,11 @@
+# ข้อมูลจริงและไฟล์ที่สร้างตอนใช้งาน — ห้ามขึ้น Git (มีข้อมูลโรงงาน)
+data/
+backups/
+# ชุดแพ็กเกจ Windows (ใหญ่ ~18 MB) — แจกผ่าน Release ไม่ใช่ใน repo
+build/
+dist/
+# Python / ทดสอบ
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/

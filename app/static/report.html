@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>รายงาน — T14 Machine Log</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+<header class="topbar"></header>
+<main>
+  <section class="card no-print" style="margin-bottom:16px">
+    <div class="filters">
+      <div class="field">
+        <label for="fFrom">ตั้งแต่วันที่</label>
+        <input type="date" class="input" id="fFrom">
+      </div>
+      <div class="field">
+        <label for="fTo">ถึงวันที่</label>
+        <input type="date" class="input" id="fTo">
+      </div>
+      <div class="field">
+        <label for="fType">ประเภท</label>
+        <!-- v1.10 ตัวเลือกยาวขึ้น (Monday Cleaning) — กำหนดความกว้างให้แถบตัวกรองอยู่บรรทัดเดียว -->
+        <select class="input" id="fType" style="width:210px">
+          <option value="problem">ปัญหา</option>
+          <option value="problem_sl">ปัญหา+Stop Line+Cleaning</option>
+          <option value="improve">การปรับปรุง</option>
+          <option value="stopline">Stop Line</option>
+          <option value="cleaning">Monday Cleaning</option>
+          <option value="all">ทั้งหมด</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fMachine">เครื่องจักร</label>
+        <select class="input" id="fMachine"><option value="">ทั้งหมด</option></select>
+      </div>
+      <div class="field">
+        <label for="fSize">Size</label>
+        <select class="input" id="fSize"><option value="">ทั้งหมด</option></select>
+      </div>
+      <div class="field">
+        <label for="fShift">กะ</label>
+        <select class="input" id="fShift">
+          <option value="">ทั้งหมด</option><option value="M">เช้า</option><option value="N">ดึก</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fStatus">สถานะ (งานปรับปรุง)</label>
+        <select class="input" id="fStatus">
+          <option value="">ทั้งหมด</option><option value="pending">รอดำเนินการ</option>
+          <option value="in_progress">ระหว่างดำเนินการ</option><option value="done">เสร็จแล้ว</option>
+          <option value="overdue">เกินกำหนด</option>
+          <option value="pending_ontime">รอดำเนินการ (ยังไม่เกินกำหนด)</option>
+          <option value="in_progress_ontime">ระหว่างดำเนินการ (ยังไม่เกินกำหนด)</option>
+          <option value="open">ยังไม่เสร็จ (รอ + ระหว่างดำเนินการ)</option>
+        </select>
+      </div>
+      <button class="btn primary" id="runBtn">แสดงรายงาน</button>
+      <span class="grow"></span>
+      <button class="btn" id="xlsxBtn" title="ส่งออกรายงานที่แสดงอยู่ (ตัวกรองเดียวกัน) เป็นไฟล์ Excel">📥 Excel</button>
+      <button class="btn" id="printBtn">🖨 พิมพ์ / บันทึก PDF</button>
+    </div>
+  </section>
+
+  <section class="sheet" id="sheet">
+    <div class="empty-state">เลือกช่วงวันที่แล้วกด "แสดงรายงาน"</div>
+  </section>
+</main>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/report.js"></script>
+</body>
+</html>

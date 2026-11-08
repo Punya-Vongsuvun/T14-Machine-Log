@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>บันทึกงาน — T14 Machine Log</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+<header class="topbar"></header>
+<main>
+  <!-- แถบวันที่ + ยอดผลิตประจำวัน + สรุปรายการของวัน -->
+  <section class="card daybar">
+    <button class="btn icon" id="prevDay" title="วันก่อนหน้า">◀</button>
+    <input type="date" class="input" id="datePick" aria-label="วันที่">
+    <button class="btn icon" id="nextDay" title="วันถัดไป">▶</button>
+    <button class="btn" id="todayBtn">วันนี้</button>
+    <span class="day-name" id="dayName"></span>
+    <span class="sep"></span>
+    <div class="qty">
+      <label class="label" for="target">เป้าหมาย</label>
+      <input class="input right num" id="target" inputmode="numeric" autocomplete="off" placeholder="0">
+    </div>
+    <div class="qty">
+      <label class="label" for="output">ผลิตได้</label>
+      <input class="input right num" id="output" inputmode="numeric" autocomplete="off" placeholder="0">
+    </div>
+    <div class="qty">
+      <span class="label">ผลต่าง</span>
+      <div class="diff-box num" id="diffBox">—</div>
+    </div>
+    <label class="holiday-check" title="วันหยุด: เป้าหมาย / ผลิตได้ไม่บังคับ (ถ้ากรอกครบยังนับตามปกติ)">
+      <input type="checkbox" id="holiday"> วันหยุด
+    </label>
+    <button class="btn primary" id="saveDaily">บันทึกยอดผลิต</button>
+    <span class="pill" id="dailyState"></span>
+    <button class="btn sm hidden" id="moveDay" title="กรอกผิดวัน? ย้ายยอดผลิต (และรายการของวันนี้) ไปวันที่ถูก">↪ ย้ายวัน</button>
+    <span class="grow"></span>
+    <span class="day-chip">
+      <span class="muted" id="daySummary"></span>
+      <button class="btn" id="openDayList">📋 ดู / แก้ไขรายการ</button>
+    </span>
+  </section>
+
+  <!-- 2 กรอบ: ปัญหาเครื่องจักร (ส้ม) / การปรับปรุง (น้ำเงิน) — สร้างโดย entry.js -->
+  <div class="panels">
+    <section class="card panel problem" id="panel-problem"></section>
+    <section class="card panel improve" id="panel-improve"></section>
+  </div>
+</main>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/entry.js"></script>
+</body>
+</html>

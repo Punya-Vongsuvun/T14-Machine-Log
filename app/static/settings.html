@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ตั้งค่า — T14 Machine Log</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+<header class="topbar"></header>
+<main class="stack">
+  <!-- ข้อมูลทั่วไป -->
+  <section class="card">
+    <div class="card-head"><h2>ข้อมูลทั่วไป</h2></div>
+    <form class="card-body" id="generalForm" autocomplete="off" novalidate>
+      <div class="settings-grid">
+        <div class="field">
+          <label for="sLine" class="req">ชื่อ Line</label>
+          <input class="input" id="sLine" maxlength="50">
+        </div>
+        <div class="field">
+          <label for="sTarget">เป้าหมายเริ่มต้นต่อวัน</label>
+          <input class="input right num" id="sTarget" inputmode="numeric" placeholder="ไม่กำหนด">
+        </div>
+        <div class="field">
+          <label for="sMorning" class="req">เวลาเริ่มกะเช้า</label>
+          <input class="input center num" id="sMorning" placeholder="06.00">
+        </div>
+        <div class="field">
+          <label for="sNight" class="req">เวลาเริ่มกะดึก</label>
+          <input class="input center num" id="sNight" placeholder="18.00">
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <span class="muted small">เปลี่ยนเวลากะ มีผลกับรายการที่บันทึกหรือแก้ไขหลังจากนี้ — รายการเดิมคงกะเดิม</span>
+        <span class="grow"></span>
+        <button type="submit" class="btn primary">บันทึกการตั้งค่า</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Master -->
+  <section class="card">
+    <div class="card-head"><h2>รายการตัวเลือก (Master)</h2></div>
+    <div class="tabs" id="masterTabs"></div>
+    <div class="card-body">
+      <form class="row" id="addForm" autocomplete="off" style="margin-bottom:10px">
+        <input class="input grow" id="addName" placeholder="เพิ่มรายการใหม่ ..." style="max-width:640px">
+        <button type="submit" class="btn primary">+ เพิ่ม</button>
+        <span class="muted small" id="masterHint"></span>
+      </form>
+      <ul class="master-list" id="masterList"></ul>
+    </div>
+  </section>
+
+  <!-- Backup / Restore -->
+  <section class="card">
+    <div class="card-head">
+      <h2>สำรองข้อมูล (Backup) / กู้คืน (Restore)</h2>
+      <span class="grow"></span>
+      <button class="btn primary" id="backupNow">💾 Backup ตอนนี้</button>
+    </div>
+    <div class="card-body stack">
+      <div class="small muted">
+        ข้อมูล: <span class="path" id="pathData"></span><br>
+        Backup: <span class="path" id="pathBackup"></span><br>
+        ระบบ Backup อัตโนมัติวันละ 1 ครั้งเมื่อเปิดโปรแกรม (เก็บ 30 ชุดล่าสุด) · ก่อน Restore ทุกครั้งระบบจะ Backup ข้อมูลปัจจุบันให้ก่อนเสมอ
+        · แนะนำให้คัดลอกไฟล์ Backup ไปเก็บใน Drive อื่นหรือ USB เป็นระยะ
+      </div>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>วันที่-เวลา</th><th>ประเภท</th><th>ชื่อไฟล์</th><th class="r">ขนาด</th><th class="c">จัดการ</th></tr></thead>
+          <tbody id="backupRows"></tbody>
+        </table>
+      </div>
+      <div class="row">
+        <span class="label">Restore จากไฟล์ .zip:</span>
+        <input type="file" id="restoreFile" accept=".zip">
+        <button class="btn danger" id="restoreUpload">Restore จากไฟล์</button>
+      </div>
+    </div>
+  </section>
+  <div class="muted small" id="appVersion"></div>
+</main>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+# Start.bat ต้องเป็น CRLF สำหรับ cmd.exe (เมื่อ git pull บน Windows)
+Start.bat text eol=crlf
