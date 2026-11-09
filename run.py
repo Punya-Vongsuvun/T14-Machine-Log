@@ -12,17 +12,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from app import config  # noqa: E402
 
 URL = f"http://localhost:{config.PORT}/"
+CHECK_HOST = "127.0.0.1"  # เช็กตัวเอง (config.HOST = 0.0.0.0 ใช้เป็นปลายทางเชื่อมต่อบน Windows ไม่ได้)
 
 
 def _port_in_use() -> bool:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.settimeout(0.5)
-        return s.connect_ex((config.HOST, config.PORT)) == 0
+        return s.connect_ex((CHECK_HOST, config.PORT)) == 0
 
 
 def _is_our_app() -> bool:
     try:
-        with urllib.request.urlopen(f"http://{config.HOST}:{config.PORT}/api/health", timeout=2) as r:
+        with urllib.request.urlopen(f"http://{CHECK_HOST}:{config.PORT}/api/health", timeout=2) as r:
             return config.APP_NAME.encode() in r.read()
     except OSError:
         return False

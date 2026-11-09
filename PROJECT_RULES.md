@@ -16,7 +16,7 @@ Workflow: **ASK → PROPOSE → APPROVE → DEVELOP → TEST → DELIVER**
 
 ## 2. ขอบเขตที่ได้รับอนุมัติ (ยืนยันโดยผู้ใช้ 23/10/2026 — "ตามแนะนำ อนุมัติ")
 
-Web App บันทึกปัญหา/การปรับปรุงเครื่องจักรของ **Production Line T14** ใช้บน Windows เครื่องเดียว ผ่าน Browser, Localhost, Offline, ข้อมูลเก็บในโฟลเดอร์โปรแกรม
+Web App บันทึกปัญหา/การปรับปรุงเครื่องจักรของ **Production Line T14** ติดตั้งบน Windows เครื่องเดียว ใช้ผ่าน Browser (Localhost และเครื่องอื่นใน LAN), Offline, ข้อมูลเก็บในโฟลเดอร์โปรแกรม
 
 ### 2.1 ฟิลด์ข้อมูล
 | ฟิลด์ | วิธีป้อน |
@@ -170,7 +170,7 @@ Web App บันทึกปัญหา/การปรับปรุงเ�
 - SQLite (`data/t14.db`) — `PRAGMA user_version` ใช้ทำ Schema Migration
 - openpyxl 3.1.5 (สร้างไฟล์ Excel — Python ล้วน, MIT, Offline) — เพิ่มใน v1.5
 - HTML/CSS/JavaScript (ไม่มี Framework), Chart.js 4.4.1, ฟอนต์ Sarabun — ทุกไฟล์อยู่ในเครื่อง ไม่ใช้ CDN
-- Server รับเฉพาะ `127.0.0.1:8014`
+- Server รับที่ `0.0.0.0:8014` (v1.10.4 อนุมัติ 9/11/2026 ให้เครื่องอื่นใน LAN เปิดได้; ไม่มี Login) — `run.py` เช็ก "โปรแกรมเปิดอยู่แล้ว" ที่ `127.0.0.1`
 
 ## 4. ข้อตกลงการพัฒนา
 - ค่าที่คำนวณ (ชม., กะ) คำนวณที่ Server เป็นหลัก (`app/timecalc.py`) — JS มีสูตรเดียวกันเพื่อแสดงผลทันที ต้องแก้คู่กันเสมอ

@@ -12,7 +12,7 @@ DB_PATH = DATA_DIR / "t14.db"
 BACKUP_DIR = ROOT / "backups"
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
-HOST = "127.0.0.1"
+HOST = "0.0.0.0"   # รับการเชื่อมต่อจากเครื่องอื่นใน LAN ด้วย
 PORT = int(os.environ.get("T14_PORT", "8014"))
 
 AUTO_BACKUP_KEEP = 30
